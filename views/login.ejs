@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login</title>
+	<style type="text/css">
+	body{
+		margin: 1.5em;
+	}
+	</style>
+</head>
+<body>
+<% include templates/temp_header %>
+<h1>Login</h1>
+<hr>
+<form method="POST" action="/login">
+   	<label>Username</label>
+   	<input type="text" name="username">
+   	<label>Password</label>
+   	<input type="password" name="password">
+   	<button>Login</button>
+</form>
+<hr>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Register</title>
+</head>
+<body>
+<% include templates/temp_header %>
+
+<h1>Register</h1>
+<form method="POST" action="/register">
+    <label>Full name</label>
+    <input type="text" name="full_name" placeholder="full name">
+    <label>Username</label>
+    <input type="text" name="username" placeholder="username">
+    <label>Password</label>
+    <input type="password" name="password" placeholder="pass">
+    <button>Register</button>
+</form>
+</body>
+</html>

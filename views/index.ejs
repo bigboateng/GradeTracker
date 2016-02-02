@@ -6,29 +6,9 @@
   </head>
   <body>
   <div id="main-wrapper">
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <hr>
-    <div id="login_div">
-    <form>
-    	<label>Username</label>
-    	<input type="text" id="username">
-    	<label>Password</label>
-    	<input type="password" id="password">
-    	<button>Login</button>
-    </form>
-    </div>
-    <hr>
-
-    <h2>Register</h2>
-    	<label>Full name</label>
-    	<input type="text" id="full_name">
-    	<label>Username</label>
-    	<input type="text" id="username">
-    	<label>Password</label>
-    	<input type="password" id="password">
-    	<button>Register</button>
-    </form>
+    <% include templates/temp_header.ejs %>
+    <a href="/login"><button>Login</button></a>
+    <a href="/register"><button>Register</button></a>
 </div>
   </body>
 </html>

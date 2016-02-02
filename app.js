@@ -9,7 +9,8 @@ var passport = require('passport');
 var flash = require('connect-flash');
 var session = require('express-session');
 
-
+// fucking remove this
+var temp_title = "Grade Tracker verson 0.01";
 
 var configDb = require('./config/database.js');
 // configuration - connecting to database
@@ -17,7 +18,7 @@ mongoose.connect(configDb.url);
 // pass passport for configuration
 require('./config/passport')(passport);
 users = require('./routes/users.js');
-
+var index = require('./routes/index.js');
 var app = express();
 
 // require for passport
@@ -43,15 +44,70 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // routes configuration
-require('./routes/index.js')(app, passport);
-app.use('/u', users);
+//app.use('/', index);
+app.use('/u', authenticate, users);
 
+// home page
+app.get('/', function(req, res){
+  res.render('index', {
+    title: temp_title
+  }); 
+});
+
+// login and register pages 
+app.get('/register', isLoggedIn, function(req, res){
+  res.render('register', {
+    title: temp_title
+  });
+});
+
+app.get('/login', isLoggedIn, function(req, res){
+  res.render('login', {
+    title: temp_title
+  });
+});
+
+// register 
+app.post('/register', passport.authenticate('local-signup',{
+  successRedirect: '/u',
+  failureRedirect: '/register',
+  failureFlash: true
+}));
+
+// login
+app.post('/login' ,passport.authenticate('local-signin', {
+  successRedirect: '/u',
+  failureRedirect: '/login',
+  failureFlash: true
+}));
+
+// check if user is logged in for register/login pages
+function isLoggedIn(req, res, next){
+  if(req.isAuthenticated()){
+    res.redirect('/u');
+  }else{
+    return next();
+  }
+}
+
+// authenticate angular app
+function authenticate(req, res, next){
+  if(req.isAuthenticated()) return next();
+  res.redirect('/');
+}
+
+// logout
+app.get('/logout', function(req, res, next){
+  req.logout();
+  res.redirect('/');
+});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
+
 
 // error handlers
 
